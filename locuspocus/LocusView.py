@@ -73,8 +73,7 @@ class SubLociView(SubLoci):
         return (LocusView(x,self._ref) for x in self.LIDs)
 
     def add(self,locus):
-        # self.loci.append(locus)
-        raise NotImplementedError
+        pass
 
     def __getitem__(self,index):
         # return self.loci[index]
@@ -89,7 +88,7 @@ class SubLociView(SubLoci):
 
 class LocusView(Locus):
     '''
-    A LocusView is an efficient way to acces
+    A LocusView is an efficient way to access
     Locus objects 
     '''
     def __init__(self, LID, refloci):
@@ -135,7 +134,7 @@ class LocusView(Locus):
         return self._property('name')
 
     def add_sublocus(self,locus):
-        raise NotImplementedError
+        self.subloci.add(locus)
 
    #def __repr__(self):
    #    return (

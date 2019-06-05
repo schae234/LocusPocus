@@ -278,3 +278,16 @@ def test_get_subloic_by_index(SimpleRefLoci):
     x = SimpleRefLoci['x']
     assert x.subloci[0]
 
+def test_set_attr(SimpleRefLoci):
+    x = SimpleRefLoci['x']
+    assert x['foo'] == 'bar'
+    x['foo'] = 'baz'
+    assert x['foo'] == 'baz'
+    # change it back
+    x['foo'] = 'bar'
+    # check it
+    assert x['foo'] == 'bar'
+
+
+def test_add_sublocus(SimpleRefLoci):
+    x = SimpleRefLoci['x']

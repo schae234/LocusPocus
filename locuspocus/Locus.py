@@ -2,7 +2,7 @@
 from collections import defaultdict
 from dataclasses import dataclass,field,InitVar,FrozenInstanceError
 from itertools import chain
-from typing import Union, Any, List, Optional, cast, Callable, Iterable
+from typing import Union, Any, List, Optional, cast, Callable, Iterable, ClassVar, Dict
 
 from .Exceptions import StrandError, ChromosomeError
 
@@ -11,6 +11,8 @@ import math
 import hashlib
 import locuspocus
 import dataclasses
+import uuid
+
 
 import pandas as pd
 import numpy as np
@@ -74,9 +76,23 @@ class Locus:
     frame: int = None
     name: str = None
 
+    # 
+    uuid: uuid = field(init=False,repr=False)
+
     # Extra locus stuff
-    attrs: LocusAttrs = field(default_factory=LocusAttrs)
-    subloci: SubLoci = field(default_factory=SubLoci) 
+    #attrs: LocusAttrs = field(default_factory=LocusAttrs)
+    attrs: ClassVar[Dict[str,str]] = {}
+    # DAG info
+    Tree: ClassVar[Dict[int,int]] = pd.DataFrame(columns=['parent','child'])
+    parent: None = field(default=None,repr=False)
+
+    def __post_init__(self):
+        self.uuid = uuid.uuid4() 
+
+    #-----------------------------------------
+    #       Methods
+    #-----------------------------------------
+
 
     def __len__(self):
         return abs(self.end - self.start) + 1
